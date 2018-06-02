@@ -2,6 +2,7 @@ package com.escapevelocityfromearth2.shohosan;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -25,6 +26,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -64,7 +66,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     private Button cancelButton;
 
     private int REQUEST_GALLERY = 0;
-    private Context mContext = this;
+    private Context mContext = this ;
     private int REQUEST_CODE_STORAGE_PERMISSION = 1;
 
     private Bitmap mBitmap;
@@ -147,7 +149,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.ok_button:
                 try {
-                    callCloudVision(mBitmap);
+                    callCloudVision(mBitmap, this);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -161,10 +163,20 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-    static private void callCloudVision(final Bitmap bitmap) throws IOException {
+    static private void callCloudVision(final Bitmap bitmap, final Context context) throws IOException {
 
         // Do the real work in an async task, because we need to use the network anyway
         new AsyncTask<Object, Void, String>() {
+
+            ProgressDialog progressDialog;
+
+            @Override
+            protected void onPreExecute(){
+                progressDialog = new ProgressDialog(context);
+                progressDialog.setMessage("画像を分析しています ...");
+                progressDialog.show();
+            }
+
             @Override
             protected String doInBackground(Object... params) {
                 try {
@@ -221,12 +233,15 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                 } catch (IOException e) {
                     Log.d("CameraActivity", "failed to make API request because of other IOException " +
                             e.getMessage());
+                } finally {
+                    progressDialog.dismiss();
                 }
                 return "Cloud Vision API request failed. Check logs for details.";
             }
 
             protected void onPostExecute(String result) {
                 Log.d("CameraActivity", "Congrats! Request Recieved!!!!!");
+                progressDialog.dismiss();
                 //mImageDetails.setText(result);
 
             }
