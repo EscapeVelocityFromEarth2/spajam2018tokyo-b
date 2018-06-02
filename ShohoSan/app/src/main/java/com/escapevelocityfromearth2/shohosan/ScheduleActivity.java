@@ -46,8 +46,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
     private void updateList() {
         if (adapter == null) {
-            // todo サンプル
-            list = DbManager.loadData(this);
+            list = Util.sortAlarmDataList(this);//DbManager.loadData(this , null);
             adapter = new ScheduleListAdapter(this, 0, list);
             listView.setAdapter(adapter);
         }

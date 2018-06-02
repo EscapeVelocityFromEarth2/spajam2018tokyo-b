@@ -11,14 +11,14 @@ public class DrugDbHelper extends SQLiteOpenHelper {
         final static private int DB_VERSION = 1;
         public static final String DB_FILE_NAME = "shohosan.db";
 
-        public final String DB_COLUMN_ID = "_id";                   //databaseId
-        public final String DB_COLUMN_NAME = "name";                //名前
-        public final String DB_COLUMN_TIMING = "timing";            //服用タイミング
-        public final String DB_COLUMN_COUNT = "count";              //残数
-        public final String DB_COLUMN_ONCE_COUNT = "once_count";    //一回の摂取数
-        public final String DB_COLUMN_DATE = "date";                //調剤日（long）
+        public static final String DB_COLUMN_ID = "_id";                   //databaseId
+        public static final String DB_COLUMN_NAME = "name";                //名前
+        public static final String DB_COLUMN_TIMING = "timing";            //服用タイミング
+        public static final String DB_COLUMN_COUNT = "count";              //残数
+        public static final String DB_COLUMN_ONCE_COUNT = "once_count";    //一回の摂取数
+        public static final String DB_COLUMN_DATE = "date";                //調剤日（long）
 
-        public final String DB_TABLE = "data_table";
+        public static final String DB_TABLE = "data_table";
 
         public DrugDbHelper(Context context) {
             super(context, DB_FILE_NAME, null, DB_VERSION);

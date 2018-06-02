@@ -46,7 +46,7 @@ public class ListActivity extends AppCompatActivity {
 
     private void updateList() {
         if (adapter == null) {
-            list = DbManager.loadData(this);
+            list = DbManager.loadData(this, null);
             adapter = new DrugListAdapter(this, 0, list);
             listView.setAdapter(adapter);
         }

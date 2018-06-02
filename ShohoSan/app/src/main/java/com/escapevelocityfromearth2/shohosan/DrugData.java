@@ -62,6 +62,9 @@ public class DrugData {
     // 調剤日
     public long date;
 
+    // 現在登録されているものに応じて計算されたお知らせ時間（DB登録はなし）
+    public long alarmDate;
+
 
     public String getMedicalTimeText() {
         return getMedicalTimeText(this.timing.ordinal());
@@ -84,11 +87,15 @@ public class DrugData {
     public static ArrayList<DrugData> getSampleData() {
         ArrayList<DrugData> list = new ArrayList<>();
 
-        list.add(new DrugData(null, null, "Drug1", MEDICAL_TIME.WAKE_UP, 7, 1, System.currentTimeMillis()));
-        list.add(new DrugData(null, null, "Drug2", MEDICAL_TIME.BEFORE_MEAL, 10, 1, System.currentTimeMillis()));
-        list.add(new DrugData(null, null, "Drug3", MEDICAL_TIME.AFTER_MEAL, 5, 1, System.currentTimeMillis()));
-        list.add(new DrugData(null, null, "Drug4", MEDICAL_TIME.SLEEP, 11, 2, System.currentTimeMillis()));
+        list.add(new DrugData(null, null, -1, "Drug1", MEDICAL_TIME.WAKE_UP, 7, 1, System.currentTimeMillis()));
+//        list.add(new DrugData(null, null, -2, "Drug2", MEDICAL_TIME.BEFORE_MEAL, 10, 1, System.currentTimeMillis()));
+        list.add(new DrugData(null, null, -3, "Drug3", MEDICAL_TIME.AFTER_MEAL, 5, 1, System.currentTimeMillis()));
+        list.add(new DrugData(null, null, -4, "Drug4", MEDICAL_TIME.SLEEP, 11, 2, System.currentTimeMillis()));
 
         return list;
+    }
+
+    public DrugData copy() {
+        return new DrugData(drugImage, ocrImage, databaseId, name, timing, count, onceCount, date);
     }
 }

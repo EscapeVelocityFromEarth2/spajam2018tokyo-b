@@ -53,7 +53,7 @@ public class ScheduleListAdapter extends ArrayAdapter<DrugData> {
 
         if (item.drugImage != null) holder.imageView.setImageBitmap(item.drugImage);
         holder.titleView.setText(getTimeText(item));
-        holder.textView.setText(item.name);
+        holder.textView.setText(item.name + "\n" + item.onceCount + "錠");
 
         return convertView;
     }

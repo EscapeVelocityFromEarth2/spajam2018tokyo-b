@@ -13,7 +13,7 @@ public class DbManager {
 
     private static final String TAG = DbManager.class.getSimpleName();
 
-    public static ArrayList<DrugData> loadData(Context context){
+    public static ArrayList<DrugData> loadData(Context context, String order){
 
         DrugDbHelper helper = new DrugDbHelper(context);
         SQLiteDatabase db = helper.getReadableDatabase();
@@ -29,7 +29,7 @@ public class DbManager {
                 helper.DB_COLUMN_DATE
         };
 
-        Cursor cursor = db.query(helper.DB_TABLE, column, null, null, null, null, null);
+        Cursor cursor = db.query(helper.DB_TABLE, column, null, null, null, null, order);
 
         cursor.moveToFirst();
 
@@ -69,8 +69,7 @@ public class DbManager {
 
     public static void register(Context context, DrugData data){
 
-        android.util.Log.d(TAG + "_register", "register db item");
-        android.util.Log.d(TAG + "_load", "load data\n"
+        android.util.Log.d(TAG + "register", "register data\n"
                 + "id " + data.databaseId + "\n"
                 + "name " + data.name + "\n"
                 + "timing " + data.getMedicalTimeText() + "\n"
@@ -91,6 +90,35 @@ public class DbManager {
         values.put(helper.DB_COLUMN_ONCE_COUNT, data.onceCount);
         values.put(helper.DB_COLUMN_DATE, data.date);
         db.insert(helper.DB_TABLE, null, values);
+
+        db.close();
+    }
+
+    public static void update(Context context, DrugData data){
+
+        android.util.Log.d(TAG + "_update", "load data\n"
+                + "id " + data.databaseId + "\n"
+                + "name " + data.name + "\n"
+                + "timing " + data.getMedicalTimeText() + "\n"
+                + "count " + data.count + "\n"
+                + "once count " + data.onceCount + "\n"
+                + "date " + data.date
+        );
+
+        DrugDbHelper helper = new DrugDbHelper(context);
+        SQLiteDatabase db = helper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.clear();
+        values.put(helper.DB_COLUMN_NAME, data.name);
+        values.put(helper.DB_COLUMN_TIMING, data.timing.ordinal());
+        values.put(helper.DB_COLUMN_COUNT, data.count);
+        values.put(helper.DB_COLUMN_ONCE_COUNT, data.onceCount);
+        values.put(helper.DB_COLUMN_DATE, data.date);
+
+
+        db.update(helper.DB_TABLE, values, helper.DB_COLUMN_ID + " = " + data.databaseId, null);
 
         db.close();
     }

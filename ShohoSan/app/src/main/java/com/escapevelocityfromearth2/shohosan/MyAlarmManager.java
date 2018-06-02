@@ -13,8 +13,12 @@ import android.support.v4.app.NotificationManagerCompat;
 
 public class MyAlarmManager {
 
+    private static final int ALARM_ID = 0;
+
     public static void setAlarm(Context context, long delay) {
         // アラームの登録
+
+        cancelAlarm(context);
 
         Intent push = new Intent();
         push.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -23,15 +27,21 @@ public class MyAlarmManager {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent pendingIntent =  PendingIntent.getActivity(
                 context,
-                0,
+                ALARM_ID,
                 push,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_ONE_SHOT);
         alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(System.currentTimeMillis() + delay, null), pendingIntent);
 //        showNotification(context, push);
     }
 
-    public static void showNotification(Context context, Intent push) {
+    public static void cancelAlarm(Context context) {
+        // アラームキャンセル
 
+        NotificationManagerCompat manager = NotificationManagerCompat.from(context);
+        manager.cancel(ALARM_ID);
+    }
+
+    public static void showNotification(Context context, Intent push) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "alarm_id")
@@ -63,9 +73,6 @@ public class MyAlarmManager {
         }
     }
 
-    public static void cancelAlarm() {
-        // アラームキャンセル
-    }
 
 
 }
