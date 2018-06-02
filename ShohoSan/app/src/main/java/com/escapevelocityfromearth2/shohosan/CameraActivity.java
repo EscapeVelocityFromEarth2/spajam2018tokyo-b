@@ -26,7 +26,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -68,6 +67,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     private int REQUEST_GALLERY = 0;
     private Context mContext = this ;
     private int REQUEST_CODE_STORAGE_PERMISSION = 1;
+    static public String KEY_INTENT_OCR_RESULT = "key_intent_ocr_result";
 
     private Bitmap mBitmap;
 
@@ -90,6 +90,8 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         }
         mTextureView = (androidCamera2Sample) findViewById(R.id.textureView);
         mImageView = (ImageView) findViewById(R.id.imageView2);
+        okButton.setVisibility(View.INVISIBLE);
+        cancelButton.setVisibility(View.INVISIBLE);
         mCamera2 = new Camera2();
     }
 
@@ -119,6 +121,8 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         if (keyCode == KeyEvent.KEYCODE_BACK && mImageView.getVisibility() == View.VISIBLE) {
             mTextureView.setVisibility(View.VISIBLE);
             mImageView.setVisibility(View.INVISIBLE);
+            okButton.setVisibility(View.INVISIBLE);
+            cancelButton.setVisibility(View.INVISIBLE);
             return false;
         }
         return super.onKeyDown(keyCode, event);
@@ -144,6 +148,9 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                         mImageView.setImageBitmap(bitmap);
                         mImageView.setVisibility(View.VISIBLE);
                         mTextureView.setVisibility(View.INVISIBLE);
+                        okButton.setVisibility(View.VISIBLE);
+                        cancelButton.setVisibility(View.VISIBLE);
+                        shtBtn.setVisibility(View.INVISIBLE);
                     }
                 });
                 break;
@@ -155,6 +162,11 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 break;
             case R.id.cancel_button:
+                mTextureView.setVisibility(View.VISIBLE);
+                mImageView.setVisibility(View.INVISIBLE);
+                okButton.setVisibility(View.INVISIBLE);
+                shtBtn.setVisibility(View.VISIBLE);
+                cancelButton.setVisibility(View.INVISIBLE);
                 break;
 
             default:
@@ -242,6 +254,9 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
             protected void onPostExecute(String result) {
                 Log.d("CameraActivity", "Congrats! Request Recieved!!!!!");
                 progressDialog.dismiss();
+                Intent intent = new Intent(context, EditActivity.class);
+                intent.putExtra(KEY_INTENT_OCR_RESULT, result);
+                context.startActivity(intent);
                 //mImageDetails.setText(result);
 
             }
@@ -249,8 +264,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     private static String convertResponseToString(BatchAnnotateImagesResponse response) {
-        String message = "I found these Text How was it?:\n\n";
-
+        String message = null;
         List<EntityAnnotation> labels = response.getResponses().get(0).getTextAnnotations();
         if (labels != null) {
             for (EntityAnnotation label : labels) {
