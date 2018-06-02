@@ -1,4 +1,4 @@
-package com.escapevelocityfromearth2.shohosan;
+package com.escapevelocityfromearth2.shohosan.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.escapevelocityfromearth2.shohosan.DrugData;
+import com.escapevelocityfromearth2.shohosan.R;
 
 import java.util.List;
 

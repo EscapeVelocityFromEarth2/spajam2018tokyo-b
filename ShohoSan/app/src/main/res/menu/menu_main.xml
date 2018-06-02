@@ -5,6 +5,12 @@
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="アラームデモ（10秒）"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_sample"
+        android:orderInCategory="100"
+        android:title="サンプルデータ登録"
         app:showAsAction="never" />
 </menu>

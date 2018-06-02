@@ -7,6 +7,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.escapevelocityfromearth2.shohosan.database.DbManager;
+import com.escapevelocityfromearth2.shohosan.view.ScheduleListAdapter;
+
 import java.util.ArrayList;
 
 public class ScheduleActivity extends AppCompatActivity {
@@ -44,7 +47,7 @@ public class ScheduleActivity extends AppCompatActivity {
     private void updateList() {
         if (adapter == null) {
             // todo サンプル
-            list = DrugData.getSampleData();
+            list = DbManager.loadData(this);
             adapter = new ScheduleListAdapter(this, 0, list);
             listView.setAdapter(adapter);
         }
