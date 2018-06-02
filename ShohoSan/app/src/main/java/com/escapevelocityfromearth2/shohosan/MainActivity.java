@@ -1,19 +1,25 @@
 package com.escapevelocityfromearth2.shohosan;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import java.util.Timer;
+import java.util.TimerTask;
+
+import io.flic.lib.FlicAppNotInstalledException;
+import io.flic.lib.FlicBroadcastReceiverFlags;
+import io.flic.lib.FlicButton;
+import io.flic.lib.FlicManager;
+import io.flic.lib.FlicManagerInitializedCallback;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +33,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //Flicを繋げるとこ
+        FlicManager.setAppCredentials("testyou992@gmail.com", "Katsu992test", "testyou");
+        try {
+            FlicManager.getInstance(this, new FlicManagerInitializedCallback() {
+                @Override
+                public void onInitialized(FlicManager manager) {
+                    manager.initiateGrabButton(MainActivity.this);
+                }
+            });
+        } catch (FlicAppNotInstalledException err) {
+            Toast.makeText(this, "Flic App is not installed", Toast.LENGTH_SHORT).show();
+        }
 
         scheduleButton = findViewById(R.id.schedule_button);
         scheduleButton.setOnClickListener(new View.OnClickListener() {
@@ -91,4 +110,49 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    //ボタンのためのやつ
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        FlicManager.getInstance(this, new FlicManagerInitializedCallback() {
+            @Override
+            public void onInitialized(FlicManager manager) {
+                final FlicButton button = manager.completeGrabButton(requestCode, resultCode, data);
+                Toast.makeText(MainActivity.this,"34",Toast.LENGTH_LONG).show();
+                if (button != null) {
+                    button.registerListenForBroadcast(FlicBroadcastReceiverFlags.UP_OR_DOWN | FlicBroadcastReceiverFlags.REMOVED);
+                    Toast.makeText(MainActivity.this, "Grabbed a button", Toast.LENGTH_SHORT).show();
+
+                    final Timer mTimer = new Timer();
+                    final Handler mHandler = new Handler();
+                    mTimer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // 実行したい処理
+                                    int con = button.getConnectionStatus();
+                                    Log.d("yo", "removed");
+                                    Toast.makeText(MainActivity.this, "Yes!!", Toast.LENGTH_SHORT).show();
+                                    if (con==0) {
+                                        Toast.makeText(MainActivity.this, "Disconnected!!", Toast.LENGTH_SHORT).show();
+                                    }else {
+                                        mTimer.cancel();
+                                    }
+                                }
+                            });
+                        }
+                    }, 1000, 1000); // 実行したい間隔(ミリ秒)
+
+                } else {
+                    Toast.makeText(MainActivity.this, "Did not grab any button", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+        });
+    }
+
 }
