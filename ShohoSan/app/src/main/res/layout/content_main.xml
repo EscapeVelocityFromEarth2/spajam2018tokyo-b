@@ -50,6 +50,12 @@
             android:layout_height="wrap_content"
             android:text="お薬を追加する"/>
 
+        <Button
+            android:id="@+id/photo_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="撮影"/>
+
     </LinearLayout>
 
 </RelativeLayout>

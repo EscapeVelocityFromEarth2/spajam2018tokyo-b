@@ -52,6 +52,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        addButton = findViewById(R.id.photo_button);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, CameraActivity.class));
+            }
+        });
+
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
