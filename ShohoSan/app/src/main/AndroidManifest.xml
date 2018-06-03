@@ -25,18 +25,20 @@
         </activity>
         <activity android:name=".EditActivity" />
         <activity android:name=".ListActivity" />
-        <activity android:name=".ScheduleActivity"></activity>
+        <activity android:name=".ScheduleActivity" />
         <activity android:name=".CameraActivity" />
         <activity
             android:name=".CheckActivity"
-            android:label="薬飲む"
-            android:exported="true">
+            android:exported="true"
+            android:label="薬飲む">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".AlarmActivity" />
+
         <service
             android:name=".VoiceActionService"
             android:label="@string/app_name"
@@ -44,11 +46,15 @@
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
+
             <meta-data
                 android:name="android.accessibilityservice"
                 android:resource="@xml/voice_action_service" />
         </service>
-        <activity android:name=".AlarmResultActivity"></activity>
+
+        <activity android:name=".AlarmResultActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/Clear" />
     </application>
 
 </manifest>
