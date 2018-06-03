@@ -41,18 +41,19 @@ public class MyAlarmManager {
         manager.cancel(ALARM_ID);
     }
 
-    public static void showNotification(Context context, Intent push) {
+    public static void showNotification(Context context) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "alarm_id")
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setCategory(Notification.CATEGORY_MESSAGE)
-                    .setContentTitle("Sample Notification")
-                    .setContentText("This is a normal notification.");
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                    .setContentTitle(context.getResources().getString(R.string.notification_title))
+                    .setContentText(context.getResources().getString(R.string.notification_content));
 
-            PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(context, 0, push, PendingIntent.FLAG_CANCEL_CURRENT);
-            builder.setContentText("Heads-Up Notification on Android L or above.")
-                    .setFullScreenIntent(fullScreenPendingIntent, true);
+            //PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(context, 0, push, PendingIntent.FLAG_CANCEL_CURRENT);
+            //builder.setContentText("Heads-Up Notification on Android L or above.")
+            //        .setFullScreenIntent(fullScreenPendingIntent, true);
 
             NotificationManagerCompat manager = NotificationManagerCompat.from(context);
             manager.notify(Util.NOTIFICATION_ID, builder.build());
@@ -61,18 +62,21 @@ public class MyAlarmManager {
                     .setSmallIcon(R.mipmap.ic_launcher)
                     .setPriority(Notification.PRIORITY_DEFAULT)
                     .setCategory(Notification.CATEGORY_MESSAGE)
-                    .setContentTitle("Sample Notification")
-                    .setContentText("This is a normal notification.");
+                    .setContentTitle(context.getResources().getString(R.string.notification_title))
+                    .setContentText(context.getResources().getString(R.string.notification_content));
 
-            PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(context, 0, push, PendingIntent.FLAG_CANCEL_CURRENT);
-            notificationBuilder.setContentText("Heads-Up Notification on Android L or above.")
-                    .setFullScreenIntent(fullScreenPendingIntent, true);
+            //PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(context, 0, push, PendingIntent.FLAG_CANCEL_CURRENT);
+            //notificationBuilder.setContentText("Heads-Up Notification on Android L or above.")
+            //        .setFullScreenIntent(fullScreenPendingIntent, true);
             NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             mNotificationManager.notify(Util.NOTIFICATION_ID, notificationBuilder.build());
 
         }
     }
 
-
+    public static void cancelNotification(Context context) {
+        NotificationManagerCompat manager = NotificationManagerCompat.from(context);
+        manager.cancel(Util.NOTIFICATION_ID);
+    }
 
 }

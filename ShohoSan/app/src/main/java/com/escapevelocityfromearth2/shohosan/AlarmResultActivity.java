@@ -21,6 +21,7 @@ public class AlarmResultActivity extends AppCompatActivity {
         if (bar != null) bar.setTitle("");
         setTitle("");
         showDistDialog();
+        MyAlarmManager.cancelNotification(context);
     }
 
     public void showDistDialog() {

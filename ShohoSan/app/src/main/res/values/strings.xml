@@ -11,4 +11,6 @@
     <string name="timing">タイミング</string>
     <string name="drug_name">薬の種類</string>
     <string name="others">その他</string>
+    <string name="notification_title">食事中...</string>
+    <string name="notification_content">終わったらお知らせしますね</string>
 </resources>

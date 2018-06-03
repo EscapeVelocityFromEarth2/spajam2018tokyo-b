@@ -38,10 +38,12 @@ public class VoiceActionService extends AccessibilityService {
 
         String str = text.toString();
         if ((str.contains("ごはん") || str.contains("ご飯"))
-                && (str.contains("食べる") || str.contains("たべる"))) {
+                && ((str.contains("食べる") || str.contains("たべる"))
+                || ((str.contains("これから") || str.contains("今から") || str.contains("いまから"))))) {
             if (needTakeMedicine(getDrugDataListNow())) {
                 Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
                 startAlarmManager();
+                MyAlarmManager.showNotification(getApplicationContext());
             }
         }
     }
@@ -71,14 +73,13 @@ public class VoiceActionService extends AccessibilityService {
     }
 
     private void startAlarmManager() {
-        Intent intent = new Intent(this, AlarmActivity.class);
+        Intent intent = new Intent(this, AlarmResultActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         mPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         mManager = (AlarmManager)getSystemService(ALARM_SERVICE);
         mManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, ALARM_TIMER_MSEC, mPendingIntent);
     }
-
 
     @Override
     public void onInterrupt() {
