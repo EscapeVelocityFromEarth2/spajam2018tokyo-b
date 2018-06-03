@@ -3,6 +3,7 @@ package com.escapevelocityfromearth2.shohosan;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -44,16 +45,14 @@ public class MyAlarmManager {
     public static void showNotification(Context context) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "alarm_id")
-                    .setSmallIcon(R.mipmap.ic_launcher)
+            ((NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE)).createNotificationChannel(
+                    new NotificationChannel("alarm_id","test", NotificationManager.IMPORTANCE_HIGH
+                    ));            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "alarm_id")
+                    .setSmallIcon(R.drawable.icon)
                     .setCategory(Notification.CATEGORY_MESSAGE)
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setContentTitle(context.getResources().getString(R.string.notification_title))
                     .setContentText(context.getResources().getString(R.string.notification_content));
-
-            //PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(context, 0, push, PendingIntent.FLAG_CANCEL_CURRENT);
-            //builder.setContentText("Heads-Up Notification on Android L or above.")
-            //        .setFullScreenIntent(fullScreenPendingIntent, true);
 
             NotificationManagerCompat manager = NotificationManagerCompat.from(context);
             manager.notify(Util.NOTIFICATION_ID, builder.build());
