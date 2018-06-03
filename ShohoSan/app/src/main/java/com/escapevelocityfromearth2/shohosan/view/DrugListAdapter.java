@@ -1,4 +1,4 @@
-package com.escapevelocityfromearth2.shohosan;
+package com.escapevelocityfromearth2.shohosan.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.escapevelocityfromearth2.shohosan.DrugData;
+import com.escapevelocityfromearth2.shohosan.R;
 
 import java.util.List;
 
@@ -51,7 +54,7 @@ public class DrugListAdapter extends ArrayAdapter<DrugData> {
 
         if (item.drugImage != null) holder.imageView.setImageBitmap(item.drugImage);
         holder.titleView.setText(item.name);
-        holder.textView.setText(item.getMedicalTimeText());
+        holder.textView.setText(item.getMedicalTimeText() + " あと" + item.count + "錠");
 
         return convertView;
     }

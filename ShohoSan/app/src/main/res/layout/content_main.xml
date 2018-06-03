@@ -29,25 +29,31 @@
         <TextView
             android:id="@+id/notify_text"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="32dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
             android:text="次のお薬は・・・です"/>
 
         <Button
             android:id="@+id/schedule_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:text="お薬スケジュールが見たい"/>
         <Button
             android:id="@+id/drug_list_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:text="お薬の一覧が見たい"/>
         <Button
             android:id="@+id/drug_add_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:text="お薬を追加する"/>
 
         <Button
@@ -55,6 +61,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="撮影"/>
+
+        <Button
+            android:id="@+id/meat_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="今から食事"/>
 
     </LinearLayout>
 

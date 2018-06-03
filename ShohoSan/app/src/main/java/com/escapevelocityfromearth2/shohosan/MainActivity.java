@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+<<<<<<< HEAD
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,6 +21,9 @@ import io.flic.lib.FlicBroadcastReceiverFlags;
 import io.flic.lib.FlicButton;
 import io.flic.lib.FlicManager;
 import io.flic.lib.FlicManagerInitializedCallback;
+=======
+import com.escapevelocityfromearth2.shohosan.database.DbManager;
+>>>>>>> 7074c8cbf90d5ea7308bd49b854834394de9f95f
 
 public class MainActivity extends AppCompatActivity {
 
@@ -105,6 +109,14 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            MyAlarmManager.setAlarm(this, 10 * 1000);
+            Toast.makeText(this, "10秒後にアラームをセット", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (id == R.id.action_sample) {
+            for (DrugData data : DrugData.getSampleData()) {
+                DbManager.register(this, data);
+            }
+            Toast.makeText(this, "サンプルデータ登録", Toast.LENGTH_SHORT).show();
             return true;
         }
 

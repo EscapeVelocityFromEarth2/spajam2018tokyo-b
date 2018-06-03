@@ -12,13 +12,27 @@ public class DrugData {
                     String name,
                     MEDICAL_TIME timing,
                     int count,
-                    int onceCount) {
+                    int onceCount,
+                    long date) {
+        this(drugImage, ocrImage, -1, name, timing, count, onceCount, date);
+    }
+
+    public DrugData(@Nullable Bitmap drugImage,
+                    @Nullable Bitmap ocrImage,
+                    int id,
+                    String name,
+                    MEDICAL_TIME timing,
+                    int count,
+                    int onceCount,
+                    long date) {
         if (drugImage != null) this.drugImage = drugImage;
         if (ocrImage != null) this.ocrImage = ocrImage;
+        this.databaseId = id;
         this.name = name;
         this.timing = timing;
         this.count = count;
         this.onceCount = onceCount;
+        this.date = date;
     }
 
     public enum MEDICAL_TIME {
@@ -28,6 +42,9 @@ public class DrugData {
         SLEEP           // 就寝前
         // and more
     }
+
+    // DatabaseId
+    public int databaseId;
 
     // 薬の画像
     public Bitmap drugImage;
@@ -42,25 +59,27 @@ public class DrugData {
     public int count;
     // １回の摂取数
     public int onceCount;
+    // 調剤日
+    public long date;
+
+    // 現在登録されているものに応じて計算されたお知らせ時間（DB登録はなし）
+    public long alarmDate;
 
 
     public String getMedicalTimeText() {
+        return getMedicalTimeText(this.timing.ordinal());
+    }
+
+    public static String getMedicalTimeText(int time) {
         String timingStr = "";
-        switch (this.timing) {
-            case WAKE_UP:
-                timingStr = "起床時";
-                break;
-            case BEFORE_MEAL:
-                timingStr = "食前";
-                break;
-            case AFTER_MEAL:
-                timingStr = "食後";
-                break;
-            case SLEEP:
-                timingStr = "就寝前";
-                break;
-            default:
-                break;
+        if (time == MEDICAL_TIME.WAKE_UP.ordinal()) {
+            timingStr = "起床時";
+        } else if (time == MEDICAL_TIME.BEFORE_MEAL.ordinal()) {
+            timingStr = "食前";
+        } else if (time == MEDICAL_TIME.AFTER_MEAL.ordinal()) {
+            timingStr = "食後";
+        } else if (time == MEDICAL_TIME.SLEEP.ordinal()) {
+            timingStr = "就寝前";
         }
         return timingStr;
     }
@@ -68,11 +87,15 @@ public class DrugData {
     public static ArrayList<DrugData> getSampleData() {
         ArrayList<DrugData> list = new ArrayList<>();
 
-        list.add(new DrugData(null, null, "Drug1", MEDICAL_TIME.WAKE_UP, 7, 1));
-        list.add(new DrugData(null, null, "Drug2", MEDICAL_TIME.BEFORE_MEAL, 10, 1));
-        list.add(new DrugData(null, null, "Drug3", MEDICAL_TIME.AFTER_MEAL, 5, 1));
-        list.add(new DrugData(null, null, "Drug4", MEDICAL_TIME.SLEEP, 11, 2));
+        list.add(new DrugData(null, null, -1, "Drug1", MEDICAL_TIME.WAKE_UP, 7, 1, System.currentTimeMillis()));
+//        list.add(new DrugData(null, null, -2, "Drug2", MEDICAL_TIME.BEFORE_MEAL, 10, 1, System.currentTimeMillis()));
+        list.add(new DrugData(null, null, -3, "Drug3", MEDICAL_TIME.AFTER_MEAL, 5, 1, System.currentTimeMillis()));
+        list.add(new DrugData(null, null, -4, "Drug4", MEDICAL_TIME.SLEEP, 11, 2, System.currentTimeMillis()));
 
         return list;
+    }
+
+    public DrugData copy() {
+        return new DrugData(drugImage, ocrImage, databaseId, name, timing, count, onceCount, date);
     }
 }

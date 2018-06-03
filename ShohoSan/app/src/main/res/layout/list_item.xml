@@ -26,24 +26,18 @@
             android:id="@+id/title_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_weight="1"
             android:textStyle="bold"
             android:textSize="20sp"
             android:gravity="center_vertical"
-            android:text="application name"/>
+            android:text="title"/>
 
         <TextView
             android:id="@+id/text_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_weight="1"
             android:textSize="14sp"
             android:gravity="center_vertical"
-            android:text="application name"/>
+            android:text="text"/>
     </LinearLayout>
 
 </LinearLayout>

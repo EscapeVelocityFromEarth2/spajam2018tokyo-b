@@ -27,6 +27,28 @@
         <activity android:name=".ListActivity" />
         <activity android:name=".ScheduleActivity"></activity>
         <activity android:name=".CameraActivity" />
+        <activity
+            android:name=".CheckActivity"
+            android:label="薬飲む"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AlarmActivity" />
+        <service
+            android:name=".VoiceActionService"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/voice_action_service" />
+        </service>
+        <activity android:name=".AlarmResultActivity"></activity>
     </application>
 
 </manifest>
