@@ -13,4 +13,10 @@
         android:orderInCategory="100"
         android:title="サンプルデータ登録"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_beacon"
+        android:orderInCategory="100"
+        android:title="ビーコン"
+        app:showAsAction="never" />
 </menu>

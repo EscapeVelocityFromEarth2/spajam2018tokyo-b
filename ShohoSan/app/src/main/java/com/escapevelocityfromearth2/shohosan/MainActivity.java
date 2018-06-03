@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-<<<<<<< HEAD
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,9 +20,7 @@ import io.flic.lib.FlicBroadcastReceiverFlags;
 import io.flic.lib.FlicButton;
 import io.flic.lib.FlicManager;
 import io.flic.lib.FlicManagerInitializedCallback;
-=======
 import com.escapevelocityfromearth2.shohosan.database.DbManager;
->>>>>>> 7074c8cbf90d5ea7308bd49b854834394de9f95f
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,19 +34,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        //Flicを繋げるとこ
-        FlicManager.setAppCredentials("testyou992@gmail.com", "Katsu992test", "testyou");
-        try {
-            FlicManager.getInstance(this, new FlicManagerInitializedCallback() {
-                @Override
-                public void onInitialized(FlicManager manager) {
-                    manager.initiateGrabButton(MainActivity.this);
-                }
-            });
-        } catch (FlicAppNotInstalledException err) {
-            Toast.makeText(this, "Flic App is not installed", Toast.LENGTH_SHORT).show();
-        }
 
         scheduleButton = findViewById(R.id.schedule_button);
         scheduleButton.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +101,20 @@ public class MainActivity extends AppCompatActivity {
                 DbManager.register(this, data);
             }
             Toast.makeText(this, "サンプルデータ登録", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (id == R.id.action_beacon) {
+            //Flicを繋げるとこ
+            FlicManager.setAppCredentials("testyou992@gmail.com", "Katsu992test", "testyou");
+            try {
+                FlicManager.getInstance(this, new FlicManagerInitializedCallback() {
+                    @Override
+                    public void onInitialized(FlicManager manager) {
+                        manager.initiateGrabButton(MainActivity.this);
+                    }
+                });
+            } catch (FlicAppNotInstalledException err) {
+                Toast.makeText(this, "Flic App is not installed", Toast.LENGTH_SHORT).show();
+            }
             return true;
         }
 
