@@ -157,9 +157,16 @@ public class MainActivity extends AppCompatActivity {
                                     // 実行したい処理
                                     int con = button.getConnectionStatus();
                                     Log.d("yo", "removed");
-                                    Toast.makeText(MainActivity.this, "Yes!!", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(MainActivity.this, "Yes!!", Toast.LENGTH_SHORT).show();
                                     if (con==0) {
-                                        Toast.makeText(MainActivity.this, "Disconnected!!", Toast.LENGTH_SHORT).show();
+//                                        Toast.makeText(MainActivity.this, "Disconnected!!", Toast.LENGTH_SHORT).show();
+
+                                        Intent push = new Intent();
+                                        push.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        push.setClass(MainActivity.this, AlarmResultActivity.class);
+                                        push.putExtra("type", 1);
+                                        startActivity(push);
+                                        mTimer.cancel();
                                     }else {
 //                                        mTimer.cancel();
                                     }
