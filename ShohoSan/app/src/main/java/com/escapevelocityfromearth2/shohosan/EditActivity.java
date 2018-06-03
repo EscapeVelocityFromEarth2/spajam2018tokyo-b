@@ -1,5 +1,6 @@
 package com.escapevelocityfromearth2.shohosan;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -44,8 +45,9 @@ public class EditActivity extends AppCompatActivity {
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DrugData(null, null, -3, mDrugNameText, DrugData.MEDICAL_TIME.AFTER_MEAL, 5, 1, System.currentTimeMillis());
-
+                DbManager.register(getApplicationContext(), new DrugData(null, null, -3, mDrugNameText, DrugData.MEDICAL_TIME.AFTER_MEAL, 5, 1, System.currentTimeMillis()));
+                EditActivity.this.finish();
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
 
