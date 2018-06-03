@@ -52,6 +52,7 @@ import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class CameraActivity extends AppCompatActivity implements View.OnClickListener{
@@ -178,7 +179,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
     static private void callCloudVision(final Bitmap bitmap, final Context context) throws IOException {
 
         // Do the real work in an async task, because we need to use the network anyway
-        new AsyncTask<Object, Void, String>() {
+        new AsyncTask<Object, Void, HashMap<String, String>>() {
 
             ProgressDialog progressDialog;
 
@@ -190,7 +191,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            protected String doInBackground(Object... params) {
+            protected HashMap<String, String> doInBackground(Object... params) {
                 try {
 
                     HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
@@ -248,37 +249,71 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                 } finally {
                     progressDialog.dismiss();
                 }
-                return "Cloud Vision API request failed. Check logs for details.";
+                HashMap<String, String> mapResponse = new HashMap<String, String>();
+                mapResponse.put("ERROR", "Cloud Vision API request failed. Check logs for details.");
+                return mapResponse;
             }
 
-            protected void onPostExecute(String result) {
-                Log.d("CameraActivity", "Congrats! Request Recieved!!!!!");
+            @Override
+            protected void onPostExecute(HashMap<String, String> stringStringHashMap) {
+                super.onPostExecute(stringStringHashMap);
                 progressDialog.dismiss();
                 Intent intent = new Intent(context, EditActivity.class);
-                intent.putExtra(KEY_INTENT_OCR_RESULT, result);
+                intent.putExtra(KEY_INTENT_OCR_RESULT, stringStringHashMap);
                 context.startActivity(intent);
-                //mImageDetails.setText(result);
-
             }
+
+//            protected void onPostExecute(String result) {
+//                Log.d("CameraActivity", "Congrats! Request Recieved!!!!!");
+//                progressDialog.dismiss();
+//                Intent intent = new Intent(context, EditActivity.class);
+//                intent.putExtra(KEY_INTENT_OCR_RESULT, result);
+//                context.startActivity(intent);
+//                //mImageDetails.setText(result);
+//
+//            }
         }.execute();
     }
+    public static String DRUG_NAME = "drug_name";
+    public static String DATE = "date";
+    public static String WHEN_TO_HAVE = "when_to_have";
+    public static String NUMBER = "number";
 
-    private static String convertResponseToString(BatchAnnotateImagesResponse response) {
+    private static HashMap<String, String> convertResponseToString(BatchAnnotateImagesResponse response) {
         String message = null;
         List<EntityAnnotation> labels = response.getResponses().get(0).getTextAnnotations();
+        HashMap<String, String> mapResponse = new HashMap<String, String>();
         if (labels != null) {
+            int index = 0;
             for (EntityAnnotation label : labels) {
-                message += String.format("%.3f: %s", label.getScore(), label.getDescription());
+                String[] data = "test".split("\n");
+                message += String.format("%s", label.getDescription());
                 message += "\n";
-
+                String[] resultSep = message.split("\n");
+                Log.d("CameraActivity", "convert:: resultSep:" + resultSep[0]);
+                Log.d("CameraActivity", "convert:: response:" + label.getDescription());
+                switch(index){
+                    case 2:
+                        mapResponse.put(DATE, resultSep[index]);
+                        break;
+                    case 4:
+                        mapResponse.put(NUMBER, resultSep[index]);
+                        break;
+                    case 5:
+                        mapResponse.put(WHEN_TO_HAVE, resultSep[index]);
+                        break;
+                    case 7:
+                        mapResponse.put(DRUG_NAME, resultSep[index]);
+                        break;
+                }
+                index += 1;
             }
         } else {
             message += "nothing";
         }
 
-        return message;
+        return mapResponse;
     }
-
 
     private void saveImage(Bitmap image){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {

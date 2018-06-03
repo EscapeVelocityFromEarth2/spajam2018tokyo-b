@@ -7,10 +7,11 @@
     <string name="check_medicine">薬飲む</string>
     <string name="alarm_end">お食事は終わりましたか？\nお薬は摂取しましたか？</string>
     <string name="done">しました！</string>
-    <string name="frequency">１日何回？</string>
-    <string name="timing">タイミング</string>
-    <string name="drug_name">薬の種類</string>
-    <string name="others">その他</string>
     <string name="notification_title">食事中...</string>
     <string name="notification_content">終わったらお知らせしますね</string>
+    <string name="frequency">用法</string>
+    <string name="timing">調剤日</string>
+    <string name="drug_name">お薬の名前</string>
+    <string name="others">個数</string>
+    <string name="submit">確定する</string>
 </resources>
