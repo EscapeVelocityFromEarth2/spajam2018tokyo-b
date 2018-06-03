@@ -78,7 +78,7 @@ public class VoiceActionService extends AccessibilityService {
         mPendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         mManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        mManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, ALARM_TIMER_MSEC, mPendingIntent);
+        mManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + ALARM_TIMER_MSEC, mPendingIntent);
     }
 
     @Override
