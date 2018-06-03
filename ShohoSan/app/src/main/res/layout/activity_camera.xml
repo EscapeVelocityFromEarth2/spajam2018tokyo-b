@@ -18,13 +18,14 @@
         android:layout_centerHorizontal="true" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="撮影"
         android:id="@+id/shutter_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:singleLine="true" />
+        android:background="#534C6E"
+        android:textColor="@android:color/white"
+        android:text="撮影"/>
 
     <Button
         android:id="@+id/cancel_button"
@@ -33,7 +34,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_marginStart="41dp"
-        android:singleLine="true"
+        android:layout_marginBottom="15dp"
+        android:background="#534C6E"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
         android:text="×" />
 
     <Button
@@ -41,8 +45,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/shutter_btn"
-        android:singleLine="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="41dp"
+        android:layout_marginBottom="15dp"
+        android:background="#534C6E"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
         android:text="○" />
 
 </RelativeLayout>

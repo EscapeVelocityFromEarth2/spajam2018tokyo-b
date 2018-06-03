@@ -55,6 +55,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 public class CameraActivity extends AppCompatActivity implements View.OnClickListener{
 
     private androidCamera2Sample mTextureView;
@@ -94,6 +96,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
         okButton.setVisibility(View.INVISIBLE);
         cancelButton.setVisibility(View.INVISIBLE);
         mCamera2 = new Camera2();
+        Toast.makeText(getApplicationContext(), "お薬情報が載った紙を取って下さい。", LENGTH_LONG).show();
     }
 
     public void onRequestPermissionsResult(int requestCode , String[] permissions, int[] grantResults) {
@@ -163,6 +166,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 break;
             case R.id.cancel_button:
+                Toast.makeText(getApplicationContext(), "お薬情報が載った紙を再度取って下さい。", LENGTH_LONG).show();
                 mTextureView.setVisibility(View.VISIBLE);
                 mImageView.setVisibility(View.INVISIBLE);
                 okButton.setVisibility(View.INVISIBLE);

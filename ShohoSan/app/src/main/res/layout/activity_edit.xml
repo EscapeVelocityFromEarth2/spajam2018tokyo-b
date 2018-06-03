@@ -8,6 +8,16 @@
     tools:context=".EditActivity">
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="この情報でよろしいでしょうか？"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="223dp" />
+
+    <TextView
         android:id="@+id/drug_name_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,6 +86,8 @@
         android:id="@+id/submit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/submit" />
+        android:text="@string/submit"
+        android:background="#534C6E"
+        android:textColor="@android:color/white"/>
 
 </android.widget.LinearLayout>
