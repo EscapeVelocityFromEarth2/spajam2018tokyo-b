@@ -15,13 +15,14 @@ public class Util {
 
     // 並び替えたうち、最初のもの（DB読み込みあり）
     public static DrugData getNextAlarmData(Context context) {
-        return sortAlarmDataList(context).get(0);
+        ArrayList<DrugData> list = sortAlarmDataList(context);
+        return list.size() > 0 ? sortAlarmDataList(context).get(0) : null;
     }
 
-    // 並び替えたうち、最初のもの
-    public static DrugData getNextAlarmData(ArrayList<DrugData> list) {
-        return sortAlarmDataList(list).get(0);
-    }
+//    // 並び替えたうち、最初のもの
+//    public static DrugData getNextAlarmData(ArrayList<DrugData> list) {
+//        return sortAlarmDataList(list).get(0);
+//    }
 
     public static ArrayList<DrugData> sortAlarmDataList(Context context) {
         return sortAlarmDataList(DbManager.loadData(context, DrugDbHelper.DB_COLUMN_TIMING));

@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         DrugData data = Util.getNextAlarmData(this);
-        text.setText("次のお薬は\n" + data.getMedicalTimeText() + "です");
+        text.setText("次のお薬は\n" +  (data != null ? data.getMedicalTimeText():"未定") + "です");
     }
 
     @Override

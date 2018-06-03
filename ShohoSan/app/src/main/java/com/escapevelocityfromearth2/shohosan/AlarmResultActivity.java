@@ -12,10 +12,16 @@ public class AlarmResultActivity extends AppCompatActivity {
 
     AlarmDialog dialog;
 
+    int TYPE_ALARM = 0;
+    int TYPE_DISCONNECT = 1;
+    int type = TYPE_ALARM;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_result);
+
+        type = getIntent().getIntExtra("type", TYPE_ALARM);
 
         ActionBar bar = getSupportActionBar();
         if (bar != null) bar.setTitle("");
@@ -34,7 +40,9 @@ public class AlarmResultActivity extends AppCompatActivity {
             }
         });
         dialog.setActivity(this);
+        dialog.setType(type);
         dialog.show(getSupportFragmentManager(), AlarmDialog.class.getName());
+//        dialog.setType(type);
 //        dialog.requestBeacon(this);
     }
 

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.escapevelocityfromearth2.shohosan.MyAlarmManager;
 import com.escapevelocityfromearth2.shohosan.R;
@@ -23,6 +24,12 @@ public class AlarmDialog  extends DialogFragment {
     Dialog dialog;
 
     Activity parentActivity;
+
+    int type = 0;
+    LinearLayout alarmLayout;
+    LinearLayout disconnectLayout;
+
+    Button  closeButton;
 
     Button okButton;
     Button snooseButton;
@@ -58,6 +65,20 @@ public class AlarmDialog  extends DialogFragment {
         //this.setCancelable(false);
 
         dialog.setContentView(R.layout.dialog_layout);
+        alarmLayout = dialog.findViewById(R.id.alarm_layout);
+        alarmLayout.setVisibility(View.VISIBLE);
+
+        disconnectLayout = dialog.findViewById(R.id.disconnect_layout);
+        disconnectLayout.setVisibility(View.GONE);
+
+        closeButton = dialog.findViewById(R.id.close_button);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onDismiss(null);
+                dialog.dismiss();
+            }
+        });
 
         okButton = dialog.findViewById(R.id.ok_button);
         okButton.setOnClickListener(new View.OnClickListener() {
@@ -91,12 +112,28 @@ public class AlarmDialog  extends DialogFragment {
 
         if (listener != null) dialog.setOnDismissListener(listener);
 
+
+        if (type == 1) {
+            alarmLayout.setVisibility(View.GONE);
+            disconnectLayout.setVisibility(View.VISIBLE);
+        } else {
+            // デフォルト
+            alarmLayout.setVisibility(View.VISIBLE);
+            disconnectLayout.setVisibility(View.GONE);
+        }
+
         return dialog;
 
     }
 
     public void setDismissListener(DialogInterface.OnDismissListener listener) {
        this.listener = listener;
+    }
+
+    public void setType(int type) {
+
+        this.type = type;
+
     }
 
 }
