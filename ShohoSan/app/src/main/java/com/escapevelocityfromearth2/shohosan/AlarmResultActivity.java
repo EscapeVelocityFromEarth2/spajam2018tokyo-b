@@ -1,6 +1,7 @@
 package com.escapevelocityfromearth2.shohosan;
 
 import android.content.DialogInterface;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +17,9 @@ public class AlarmResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_result);
 
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) bar.setTitle("");
+        setTitle("");
         showDistDialog();
     }
 

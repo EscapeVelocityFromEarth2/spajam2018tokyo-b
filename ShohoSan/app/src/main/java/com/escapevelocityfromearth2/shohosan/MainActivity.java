@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Timer;
@@ -24,6 +25,8 @@ import com.escapevelocityfromearth2.shohosan.database.DbManager;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    TextView text;
     Button scheduleButton;
     Button listButton;
     Button addButton;
@@ -34,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        text = findViewById(R.id.notify_text);
 
         scheduleButton = findViewById(R.id.schedule_button);
         scheduleButton.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +80,13 @@ public class MainActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DrugData data = Util.getNextAlarmData(this);
+        text.setText("次のお薬は\n" + data.getMedicalTimeText() + "です");
     }
 
     @Override
@@ -149,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
                                     if (con==0) {
                                         Toast.makeText(MainActivity.this, "Disconnected!!", Toast.LENGTH_SHORT).show();
                                     }else {
-                                        mTimer.cancel();
+//                                        mTimer.cancel();
                                     }
                                 }
                             });

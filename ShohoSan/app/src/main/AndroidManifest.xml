@@ -8,29 +8,36 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EditActivity" />
-        <activity android:name=".ListActivity" />
-        <activity android:name=".ScheduleActivity" />
-        <activity android:name=".CameraActivity" />
+        <activity android:name=".EditActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ListActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ScheduleActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CameraActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".CheckActivity"
             android:exported="true"
-            android:label="薬飲む">
+            android:label="薬飲む"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -54,7 +61,8 @@
 
         <activity android:name=".AlarmResultActivity"
             android:launchMode="singleInstance"
-            android:theme="@style/Clear" />
+            android:theme="@style/Clear"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
