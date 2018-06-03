@@ -3,7 +3,12 @@ package com.escapevelocityfromearth2.shohosan;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+
+import com.escapevelocityfromearth2.shohosan.database.DbManager;
+import com.escapevelocityfromearth2.shohosan.database.DrugDbHelper;
 
 import java.util.HashMap;
 
@@ -25,6 +30,8 @@ public class EditActivity extends AppCompatActivity {
     String mFrequencyText;
     String mOthersText;
 
+    Button mSubmitButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +40,15 @@ public class EditActivity extends AppCompatActivity {
         mDrugNameEditText = (EditText) findViewById(R.id.drug_name_edit_text);
         mTimingEditText = (EditText) findViewById(R.id.timing_edit_text);
         mFrequencyEditText = (EditText) findViewById(R.id.frequency_edit_text);
+        mSubmitButton = (Button) findViewById(R.id.submit_button);
+        mSubmitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new DrugData(null, null, -3, mDrugNameText, DrugData.MEDICAL_TIME.AFTER_MEAL, 5, 1, System.currentTimeMillis());
+
+            }
+        });
+
         HashMap<String, String> requestResult = (HashMap<String, String>) getIntent().getSerializableExtra(KEY_INTENT_OCR_RESULT);
         if(requestResult != null) {
             mDrugNameText = requestResult.get(DRUG_NAME);
