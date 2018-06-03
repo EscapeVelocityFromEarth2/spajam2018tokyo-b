@@ -46,143 +46,143 @@ public class Util {
         int hour = c.get(Calendar.HOUR_OF_DAY);    // セットした時間
 
         // DrugDbHelper.DB_COLUMN_TIMINGでソートされている前提
-        while (completeCount < dataList.size()) {
+//        while (completeCount < dataList.size()) {
+//
+//            for (DrugData data : dataList) {
+//
+//                DrugData addData = data.copy();
+//                Calendar alarmDate = Calendar.getInstance();
+//                alarmDate.setTimeInMillis(current);
+//                Log.d("test", "check timing:" + data.timing.ordinal() + " data.count:" + data.count + " count:" + count + " completeCount:" + completeCount);
+//
+//                if (data.timing.ordinal() == 0) {
+//                    // 7時
+//                    if (count <= data.count) {
+//                        if ((count == 0 && hour < 7)) {
+//                            alarmDate.set(Calendar.HOUR_OF_DAY, 7);
+//                            addData.alarmDate = alarmDate.getTimeInMillis();
+//                            sortedList.add(addData);
+//                            if (count + 1 == data.count) completeCount++;
+//                        } else if (data.count > count && hour < 7) {
+//                            alarmDate.add(Calendar.DATE, count);
+//                            alarmDate.set(Calendar.HOUR_OF_DAY, 7);
+//                            addData.alarmDate = alarmDate.getTimeInMillis();
+//                            sortedList.add(addData);
+//                            if (count + 1 == data.count) completeCount++;
+//                        } else if (data.count >= count && hour >= 7) {
+//                            alarmDate.add(Calendar.DATE, count);
+//                            alarmDate.set(Calendar.HOUR_OF_DAY, 7);
+//                            addData.alarmDate = alarmDate.getTimeInMillis();
+//                            sortedList.add(addData);
+//                            if (count == data.count) completeCount++;
+//                        }
+//                    }
+//
+//                } else if (data.timing.ordinal() == 1) {
+//                    // 食前は保留
+//                    completeCount++;
+//                } else if (data.timing.ordinal() == 2) {
+//
+//                    int daily = hour < 8 ? 3 : (hour < 13 ? 2 : (hour < 19 ? 1 : 0));
+//                    Log.d("test", "check daily:" + daily + " result:" + (count - 1) * 3 + daily + 1);
+//
+//                    // 8時
+//                    if (count == 0 || (count - 1) * 3 + daily < data.count) {
+//                        if ((count == 0 && daily >= 3)) {
+//                            alarmDate.set(Calendar.HOUR_OF_DAY, 8);
+//                            addData.alarmDate = alarmDate.getTimeInMillis();
+//                            sortedList.add(addData);
+//                            if ((count - 1) * 3 + daily + 1 == data.count) completeCount++;
+//                        } else if (data.count > (count - 1) * 3 + daily && hour < 8) {
+//                            alarmDate.add(Calendar.DATE, count);
+//                            alarmDate.set(Calendar.HOUR_OF_DAY, 8);
+//                            addData.alarmDate = alarmDate.getTimeInMillis();
+//                            sortedList.add(addData);
+//                            if ((count - 1) * 3 + daily + 1 == data.count) completeCount++;
+//                        } else if (data.count >= (count - 1) * 3 + daily && hour >= 8) {
+//                            alarmDate.add(Calendar.DATE, count);
+//                            alarmDate.set(Calendar.HOUR_OF_DAY, 8);
+//                            addData.alarmDate = alarmDate.getTimeInMillis();
+//                            sortedList.add(addData);
+//                            if ((count - 1) * 3 + daily == data.count) completeCount++;
+//                        }
+//                    }
+//
+//                    // 13時
+//                    if (count == 0 || (count - 1) * 3 + daily + 1 < data.count) {
+//
+//                        if ((count == 0 && daily >= 2)) {
+//                            alarmDate.set(Calendar.HOUR_OF_DAY, 13);
+//                            addData.alarmDate = alarmDate.getTimeInMillis();
+//                            sortedList.add(addData);
+//                            if ((count - 1) * 3 + daily + 1 == data.count) completeCount++;
+//                        } else if (data.count > (count - 1) * 3 + daily && hour < 13) {
+//                            alarmDate.add(Calendar.DATE, count);
+//                            alarmDate.set(Calendar.HOUR_OF_DAY, 13);
+//                            addData.alarmDate = alarmDate.getTimeInMillis();
+//                            sortedList.add(addData);
+//                            if ((count - 1) * 3 + daily + 2 == data.count) completeCount++;
+//                        } else if (data.count >= (count - 1) * 3 + daily && hour >= 13) {
+//                            alarmDate.add(Calendar.DATE, count);
+//                            alarmDate.set(Calendar.HOUR_OF_DAY, 13);
+//                            addData.alarmDate = alarmDate.getTimeInMillis();
+//                            sortedList.add(addData);
+//                            if ((count - 1) * 3 + daily + 1 == data.count) completeCount++;
+//                        }
+//                    }
+//
+//                    // 19時
+//                    if (count == 0 || (count - 1) * 3 + daily + 2 < data.count) {
+//
+//                        if ((count == 0 && daily >= 1)) {
+//                            alarmDate.set(Calendar.HOUR_OF_DAY, 19);
+//                            addData.alarmDate = alarmDate.getTimeInMillis();
+//                            sortedList.add(addData);
+//                            if ((count - 1) * 3 + daily + 1 == data.count) completeCount++;
+//                        } else if (data.count > (count - 1) * 3 + daily && hour < 19) {
+//                            alarmDate.add(Calendar.DATE, count);
+//                            alarmDate.set(Calendar.HOUR_OF_DAY, 19);
+//                            addData.alarmDate = alarmDate.getTimeInMillis();
+//                            sortedList.add(addData);
+//                            if ((count - 1) * 3 + daily + 3 == data.count) completeCount++;
+//                        } else if (data.count >= (count - 1) * 3 + daily && hour >= 19) {
+//                            alarmDate.add(Calendar.DATE, count);
+//                            alarmDate.set(Calendar.HOUR_OF_DAY, 19);
+//                            addData.alarmDate = alarmDate.getTimeInMillis();
+//                            sortedList.add(addData);
+//                            if ((count - 1) * 3 + daily + 2 == data.count) completeCount++;
+//                        }
+//
+//                    }
+//
+//                } else if (data.timing.ordinal() == 3) {
+//                    // 23時
+//                    if (count < data.count) {
+//                        if ((count == 0 && hour < 23)) {
+//                            alarmDate.set(Calendar.HOUR_OF_DAY, 23);
+//                            addData.alarmDate = alarmDate.getTimeInMillis();
+//                            sortedList.add(addData);
+//                            if (count + 1 == data.count) completeCount++;
+//                        } else if (data.count > count && hour < 23) {
+//                            alarmDate.add(Calendar.DATE, count);
+//                            alarmDate.set(Calendar.HOUR_OF_DAY, 23);
+//                            addData.alarmDate = alarmDate.getTimeInMillis();
+//                            sortedList.add(addData);
+//                            if (count + 1 == data.count) completeCount++;
+//                        } else if (data.count >= count && hour >= 23) {
+//                            alarmDate.add(Calendar.DATE, count);
+//                            alarmDate.set(Calendar.HOUR_OF_DAY, 23);
+//                            addData.alarmDate = alarmDate.getTimeInMillis();
+//                            sortedList.add(addData);
+//                            if (count == data.count) completeCount++;
+//                        }
+//                    }
+//                }
+//            }
+//            count++;
+//        }
 
-            for (DrugData data : dataList) {
-
-                DrugData addData = data.copy();
-                Calendar alarmDate = Calendar.getInstance();
-                alarmDate.setTimeInMillis(current);
-                Log.d("test", "check timing:" + data.timing.ordinal() + " data.count:" + data.count + " count:" + count + " completeCount:" + completeCount);
-
-                if (data.timing.ordinal() == 0) {
-                    // 7時
-                    if (count <= data.count) {
-                        if ((count == 0 && hour < 7)) {
-                            alarmDate.set(Calendar.HOUR_OF_DAY, 7);
-                            addData.alarmDate = alarmDate.getTimeInMillis();
-                            sortedList.add(addData);
-                            if (count + 1 == data.count) completeCount++;
-                        } else if (data.count > count && hour < 7) {
-                            alarmDate.add(Calendar.DATE, count);
-                            alarmDate.set(Calendar.HOUR_OF_DAY, 7);
-                            addData.alarmDate = alarmDate.getTimeInMillis();
-                            sortedList.add(addData);
-                            if (count + 1 == data.count) completeCount++;
-                        } else if (data.count >= count && hour >= 7) {
-                            alarmDate.add(Calendar.DATE, count);
-                            alarmDate.set(Calendar.HOUR_OF_DAY, 7);
-                            addData.alarmDate = alarmDate.getTimeInMillis();
-                            sortedList.add(addData);
-                            if (count == data.count) completeCount++;
-                        }
-                    }
-
-                } else if (data.timing.ordinal() == 1) {
-                    // 食前は保留
-                    completeCount++;
-                } else if (data.timing.ordinal() == 2) {
-
-                    int daily = hour < 8 ? 3 : (hour < 13 ? 2 : (hour < 19 ? 1 : 0));
-                    Log.d("test", "check daily:" + daily + " result:" + (count - 1) * 3 + daily + 1);
-
-                    // 8時
-                    if (count == 0 || (count - 1) * 3 + daily < data.count) {
-                        if ((count == 0 && daily >= 3)) {
-                            alarmDate.set(Calendar.HOUR_OF_DAY, 8);
-                            addData.alarmDate = alarmDate.getTimeInMillis();
-                            sortedList.add(addData);
-                            if ((count - 1) * 3 + daily + 1 == data.count) completeCount++;
-                        } else if (data.count > (count - 1) * 3 + daily && hour < 8) {
-                            alarmDate.add(Calendar.DATE, count);
-                            alarmDate.set(Calendar.HOUR_OF_DAY, 8);
-                            addData.alarmDate = alarmDate.getTimeInMillis();
-                            sortedList.add(addData);
-                            if ((count - 1) * 3 + daily + 1 == data.count) completeCount++;
-                        } else if (data.count >= (count - 1) * 3 + daily && hour >= 8) {
-                            alarmDate.add(Calendar.DATE, count);
-                            alarmDate.set(Calendar.HOUR_OF_DAY, 8);
-                            addData.alarmDate = alarmDate.getTimeInMillis();
-                            sortedList.add(addData);
-                            if ((count - 1) * 3 + daily == data.count) completeCount++;
-                        }
-                    }
-
-                    // 13時
-                    if (count == 0 || (count - 1) * 3 + daily + 1 < data.count) {
-
-                        if ((count == 0 && daily >= 2)) {
-                            alarmDate.set(Calendar.HOUR_OF_DAY, 13);
-                            addData.alarmDate = alarmDate.getTimeInMillis();
-                            sortedList.add(addData);
-                            if ((count - 1) * 3 + daily + 1 == data.count) completeCount++;
-                        } else if (data.count > (count - 1) * 3 + daily && hour < 13) {
-                            alarmDate.add(Calendar.DATE, count);
-                            alarmDate.set(Calendar.HOUR_OF_DAY, 13);
-                            addData.alarmDate = alarmDate.getTimeInMillis();
-                            sortedList.add(addData);
-                            if ((count - 1) * 3 + daily + 2 == data.count) completeCount++;
-                        } else if (data.count >= (count - 1) * 3 + daily && hour >= 13) {
-                            alarmDate.add(Calendar.DATE, count);
-                            alarmDate.set(Calendar.HOUR_OF_DAY, 13);
-                            addData.alarmDate = alarmDate.getTimeInMillis();
-                            sortedList.add(addData);
-                            if ((count - 1) * 3 + daily + 1 == data.count) completeCount++;
-                        }
-                    }
-
-                    // 19時
-                    if (count == 0 || (count - 1) * 3 + daily + 2 < data.count) {
-
-                        if ((count == 0 && daily >= 1)) {
-                            alarmDate.set(Calendar.HOUR_OF_DAY, 19);
-                            addData.alarmDate = alarmDate.getTimeInMillis();
-                            sortedList.add(addData);
-                            if ((count - 1) * 3 + daily + 1 == data.count) completeCount++;
-                        } else if (data.count > (count - 1) * 3 + daily && hour < 19) {
-                            alarmDate.add(Calendar.DATE, count);
-                            alarmDate.set(Calendar.HOUR_OF_DAY, 19);
-                            addData.alarmDate = alarmDate.getTimeInMillis();
-                            sortedList.add(addData);
-                            if ((count - 1) * 3 + daily + 3 == data.count) completeCount++;
-                        } else if (data.count >= (count - 1) * 3 + daily && hour >= 19) {
-                            alarmDate.add(Calendar.DATE, count);
-                            alarmDate.set(Calendar.HOUR_OF_DAY, 19);
-                            addData.alarmDate = alarmDate.getTimeInMillis();
-                            sortedList.add(addData);
-                            if ((count - 1) * 3 + daily + 2 == data.count) completeCount++;
-                        }
-
-                    }
-
-                } else if (data.timing.ordinal() == 3) {
-                    // 23時
-                    if (count < data.count) {
-                        if ((count == 0 && hour < 23)) {
-                            alarmDate.set(Calendar.HOUR_OF_DAY, 23);
-                            addData.alarmDate = alarmDate.getTimeInMillis();
-                            sortedList.add(addData);
-                            if (count + 1 == data.count) completeCount++;
-                        } else if (data.count > count && hour < 23) {
-                            alarmDate.add(Calendar.DATE, count);
-                            alarmDate.set(Calendar.HOUR_OF_DAY, 23);
-                            addData.alarmDate = alarmDate.getTimeInMillis();
-                            sortedList.add(addData);
-                            if (count + 1 == data.count) completeCount++;
-                        } else if (data.count >= count && hour >= 23) {
-                            alarmDate.add(Calendar.DATE, count);
-                            alarmDate.set(Calendar.HOUR_OF_DAY, 23);
-                            addData.alarmDate = alarmDate.getTimeInMillis();
-                            sortedList.add(addData);
-                            if (count == data.count) completeCount++;
-                        }
-                    }
-                }
-            }
-            count++;
-        }
-
-        return sortedList;
+        return dataList;
     }
 
     public static String timeStringFormat(long data){
