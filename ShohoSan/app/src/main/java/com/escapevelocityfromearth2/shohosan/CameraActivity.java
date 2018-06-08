@@ -202,7 +202,7 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
                     JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
 
                     Vision.Builder builder = new Vision.Builder(httpTransport, jsonFactory, null);
-                    builder.setVisionRequestInitializer(new VisionRequestInitializer("AIzaSyBgYO94PqGDESiNwiLLQQWPJHfkDFAsPWk"));
+                    builder.setVisionRequestInitializer(new VisionRequestInitializer("AIzaSyAT72V1NBFKsLkYt63BeXSmtMJrHg5nAnQ"));
                     builder.setApplicationName("shohosan");
                     Vision vision = builder.build();
 
