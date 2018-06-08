@@ -8,6 +8,8 @@ import com.escapevelocityfromearth2.shohosan.database.DrugDbHelper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Util {
 
@@ -44,6 +46,73 @@ public class Util {
         int count = 0;          // 登録した日数
         int completeCount = 0;  // 錠剤全て登録し終わった薬
         int hour = c.get(Calendar.HOUR_OF_DAY);    // セットした時間
+
+        for (DrugData data : dataList) {
+
+            Calendar date = Calendar.getInstance();
+            date.setTimeInMillis(current);
+
+            if (data.timing.ordinal() == 0) {
+                if (date.get(Calendar.HOUR_OF_DAY) > 7) {
+                    date.add(Calendar.DATE, 1);
+                }
+                date.set(Calendar.HOUR_OF_DAY, 7);
+                for (int i=0; i<data.count / data.onceCount ; i++) {
+                    DrugData addData = data.copy();
+                    addData.alarmDate = date.getTimeInMillis();
+                    sortedList.add(addData);
+                    date.add(Calendar.DATE, 1);
+                }
+            } else if (data.timing.ordinal() == 1) {
+                // 食前は保留
+            } else if (data.timing.ordinal() == 2) {
+
+                for (int i=0; i<data.count / data.onceCount ; i++) {
+
+                    int time = 0;
+
+                    if (date.get(Calendar.HOUR_OF_DAY) > 19) {
+                        time = 8;
+                        date.set(Calendar.HOUR_OF_DAY, 8);
+                        date.add(Calendar.DATE, 1);
+                    } else if (date.get(Calendar.HOUR_OF_DAY) > 13) {
+                        time = 19;
+                        date.set(Calendar.HOUR_OF_DAY, 19);
+                    } else if (date.get(Calendar.HOUR_OF_DAY) > 8) {
+                        time = 13;
+                        date.set(Calendar.HOUR_OF_DAY, 13);
+                    } else {
+                        time = 8;
+                        date.set(Calendar.HOUR_OF_DAY, 8);
+                    }
+
+                    DrugData addData = data.copy();
+                    addData.alarmDate = date.getTimeInMillis();
+                    sortedList.add(addData);
+                    date.add(Calendar.DATE, 1);
+                }
+
+            } else if (data.timing.ordinal() == 3) {
+                if (date.get(Calendar.HOUR_OF_DAY) > 23) {
+                    date.add(Calendar.DATE, 1);
+                }
+                date.set(Calendar.HOUR_OF_DAY, 23);
+                for (int i=0; i<data.count / data.onceCount ; i++) {
+                    DrugData addData = data.copy();
+                    addData.alarmDate = date.getTimeInMillis();
+                    sortedList.add(addData);
+                    date.add(Calendar.DATE, 1);
+                }
+            }
+        }
+
+        Collections.sort(sortedList, new Comparator<DrugData>() {
+                    @Override
+                    public int compare(DrugData item1, DrugData item2) {
+                        return Long.compare(item1.alarmDate, item2.alarmDate);
+                    }
+                });
+
 
         // DrugDbHelper.DB_COLUMN_TIMINGでソートされている前提
 //        while (completeCount < dataList.size()) {
@@ -182,7 +251,7 @@ public class Util {
 //            count++;
 //        }
 
-        return dataList;
+        return sortedList.size() > 0 ? sortedList : dataList;
     }
 
     public static String timeStringFormat(long data){
@@ -190,8 +259,8 @@ public class Util {
         calendar.setTimeInMillis(data);
         return (calendar.get(Calendar.MONTH) + 1) + "月"
                 + calendar.get(Calendar.DAY_OF_MONTH) + "日"
-                + calendar.get(Calendar.HOUR_OF_DAY) + "時"
-                + calendar.get(Calendar.MINUTE) + "分"
-                + calendar.get(Calendar.SECOND) + "秒";
+                + calendar.get(Calendar.HOUR_OF_DAY) + "時";
+//                + calendar.get(Calendar.MINUTE) + "分"
+//                + calendar.get(Calendar.SECOND) + "秒";
     }
 }

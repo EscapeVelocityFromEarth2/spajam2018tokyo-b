@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.escapevelocityfromearth2.shohosan.DrugData;
 import com.escapevelocityfromearth2.shohosan.R;
+import com.escapevelocityfromearth2.shohosan.Util;
 
 import java.util.List;
 
@@ -59,8 +60,9 @@ public class ScheduleListAdapter extends ArrayAdapter<DrugData> {
     }
 
     private String getTimeText(DrugData data) {
-        String timeStr = "「日付」の「タイミング」";
+
         // TODO 登録したデータと現在時刻から計算してテキストを生成する？
+        String timeStr = Util.timeStringFormat(data.alarmDate) + "の" + data.getMedicalTimeText();
 
         return timeStr;
     }
