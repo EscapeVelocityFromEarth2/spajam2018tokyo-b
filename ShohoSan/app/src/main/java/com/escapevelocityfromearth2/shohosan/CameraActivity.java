@@ -259,12 +259,16 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
             }
 
             @Override
-            protected void onPostExecute(HashMap<String, String> stringStringHashMap) {
-                super.onPostExecute(stringStringHashMap);
+            protected void onPostExecute(HashMap<String, String> stringHashMap) {
+                super.onPostExecute(stringHashMap);
                 progressDialog.dismiss();
-                Intent intent = new Intent(context, EditActivity.class);
-                intent.putExtra(KEY_INTENT_OCR_RESULT, stringStringHashMap);
-                context.startActivity(intent);
+                if(stringHashMap.size() > 0 && !stringHashMap.containsKey("ERROR")) {
+                    Intent intent = new Intent(context, EditActivity.class);
+                    intent.putExtra(KEY_INTENT_OCR_RESULT, stringHashMap);
+                    context.startActivity(intent);
+                } else {
+                    Toast.makeText(context, "文字の認識に失敗しました.もう一度取り直すか、再度○ボタンを押して下さい.", LENGTH_LONG).show();
+                }
             }
 
 //            protected void onPostExecute(String result) {
